@@ -1,10 +1,20 @@
-# Función que adiciona variables y atributos de la variable al modelo 
+#' Adiciona variables y atributos de la variable al modelo 
+#' 
+#' @description Adiciona variables a la estructura modelo
+#' @param modelo Modelo con estructura 
+#' @param variable Nombre de la variable a resolver
+#' @param indices Lista de indices asociadas a la variable 
+#' @param tipo caracter con tipo de variable: continua, binaria o entera
+#' @example 
+#' problema() %>%
+#' adicion_variables(variables = b, indices = list(1:2,1:3),"bin")
+#' @return modelo estructura modelo actualizada con la variable adicionada
 
 adicion_variables <- function(modelo,
-                              variables,
+                              variable,
                               indices = list(),
                               tipo = ""){
-  variable <- as_label(enquo(variables))
+  variable <- as_label(enquo(variable))
   
   modelo$variables <- c(modelo$variables, 
                         variable %>% set_names(variable)) 
