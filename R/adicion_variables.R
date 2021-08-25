@@ -10,24 +10,22 @@
 #' adicion_variables(variables = b, indices = list(1:2,1:3),"bin")
 #' @return modelo estructura modelo actualizada con la variable adicionada
 
-adicion_variables <- function(modelo,
-                              variable,
-                              indices = list(),
-                              tipo = ""){
+adicion_variables <- function(modelo, variable, indices = list(), tipo = "") {
+
   variable <- as_label(enquo(variable))
-  
-  modelo$variables <- c(modelo$variables, 
-                        variable %>% set_names(variable)) 
-  
-  modelo$indices_variables <- c(modelo$indices_variables, 
-                                list(indices %>% 
-                                  set_names(
-                                    paste(variable,names(.),sep = "_")
-                                    )) %>% 
-                                  set_names(variable))
-  
-  modelo$variables_tipo <- c(modelo$variables_tipo,
-                            tipo %>% set_names(variable))
-  
+
+  if (variable %in% names(modelo$variables)) stop("Variable ya existe")
+
+  modelo$variables <- append(
+    modelo$variables,
+    list(
+      list(
+        indices = indices,
+        tipo = tipo
+      )
+    ) %>%
+      set_names(variable)
+  )
+
  return(modelo) 
 }

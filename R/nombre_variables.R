@@ -10,19 +10,19 @@
 #' @return nombre_variables lista con nombre de las variables asociadas a sus
 #' indices
 
-nombres_variables <- function(
-  modelo
-){
-  var <- modelo$variables
-  nombre_variables <- 
-    var %>% purrr::map(function(x){
-      modelo$indices_variables %>% 
-        purrr::map(function(y) cross(y) %>% map(lift(paste)))  %>% 
-        pluck(x) %>% unlist() %>% 
-        stringr::str_replace(" ",",") %>%
-        paste0(x,"[",.,"]")
-})
+nombres_variables <- function(modelo) {
+  nombre_variables <- purrr::map2(
+    .x = modelo$variables,
+    .y = names(modelo$variables),
+    function(variable, nom_var) {
+      combinaciones <- do.call(expand.grid, variable$indices) %>%
+        unite(visual, everything(), sep = ", ") %>%
+        pull(visual)
+      combinaciones <- paste0("[", combinaciones, "]") %>%
+        paste(collapse = " ")
+      message(paste(nom_var, combinaciones))
+    }
+  )
 
-return(nombre_variables)    
 }
 

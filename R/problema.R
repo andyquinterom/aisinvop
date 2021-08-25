@@ -4,10 +4,14 @@
 #' función objetivo y restricciones
 
 problema <- function(){
-  modelo <- structure(list(variables = list(),
-                           variables_tipo = list(),
-                 indices_variables = list(),
-                 funcion_objetivo = NULL,
-                 restricciones = list()))
+  modelo <- structure(
+    list(
+      variables = list(),
+      funcion_objetivo = NULL,
+      restricciones = list()
+    )
+  )
+
+  class(modelo) <- "modelo_aisinvop"
 return(modelo)
 }
